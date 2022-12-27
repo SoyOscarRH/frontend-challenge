@@ -1,4 +1,6 @@
 # Yana ✨Front End✨ Challenge
+
+Fork Creator: [Oscar Rosas](https://soyoscarrh.github.com)
 <img src="./assets/avatars/yana.png" alt="Yana Avatar, Happy">
 
 ### Para mas informacion, consulta:
