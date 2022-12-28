@@ -1,4 +1,4 @@
-import React, {useState, useEffect, useCallback} from 'react';
+import React, {useState, useCallback} from 'react';
 import styled from 'styled-components/native';
 import {Provider} from 'react-redux';
 import {persistor, store} from './src/redux/store';
@@ -7,32 +7,30 @@ import * as SplashScreen from 'expo-splash-screen';
 import {loadAsync} from 'expo-font';
 
 import Challenge from './src';
+import { SafeAreaProvider } from 'react-native-safe-area-context';
 
 SplashScreen.preventAutoHideAsync();
 
 export default function App() {
   const [attempedToLoadFont, setAttempedToLoadFont] = useState(false);
-  useEffect(() => {
+  const onLayoutRootView = useCallback(async () => {
     const font = {
       'SF Pro Display': require('./assets/fonts/sf_pro_display.ttf'),
       'Raleway': require('./assets/fonts/raleway.ttf'),
     } as const;
     loadAsync(font)
+      .finally(SplashScreen.hideAsync)
       .finally(() => setAttempedToLoadFont(true));
-  });
-
-  const onLayoutRootView = useCallback(async () => {
-    if (attempedToLoadFont) {
-      await SplashScreen.hideAsync();
-    }
-  }, [attempedToLoadFont]);
+  }, []);
   
   return (
     <Provider store={store}>
       <PersistGate persistor={persistor} loading={null}>
-        <AppContainer onLayout={onLayoutRootView}>
-          <Challenge/>
-        </AppContainer>
+        <SafeAreaProvider>
+          <AppContainer onLayout={onLayoutRootView}>
+            {attempedToLoadFont && <Challenge/>}
+          </AppContainer>
+        </SafeAreaProvider>
       </PersistGate>
     </Provider>
   );

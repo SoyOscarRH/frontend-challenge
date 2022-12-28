@@ -56,5 +56,5 @@ const ProfilePhoto = styled.Image`
   margin: 48px 0px;
   background-color: ${backgroundColorGrey};
   background-opacity: 50%;
-  border-radius: 100%;
+  border-radius: 48px;
 `;

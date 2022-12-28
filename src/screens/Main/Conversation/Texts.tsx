@@ -10,7 +10,7 @@ const formatDateForUs = (date: Date = new Date()) => {
     month: 'short', hour: 'numeric', minute: 'numeric', 
     hour12: true} as const;
 
-  return new Intl.DateTimeFormat('es-MX', options).format(date);
+  return date.toLocaleDateString('es-MX', options);
 }; 
 
 const Texts = () => {
@@ -25,7 +25,7 @@ const Texts = () => {
     <ConversationViewer ref={scrollViewRef}>
       {messages.map(([key, messagesOfTheDay]) => (
         <View key={key}>
-          <DateText>{formatDateForUs(new Date(Number(messagesOfTheDay.at(0).timestamp)))}</DateText>
+          <DateText>{formatDateForUs(new Date(Number(messagesOfTheDay[0].timestamp)))}</DateText>
           {messagesOfTheDay.map(({text, sender, timestamp}) => (
             <Bubble key={timestamp} byMe={sender === 'me'}>{text}</Bubble>
           ))}

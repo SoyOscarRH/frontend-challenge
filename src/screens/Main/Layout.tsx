@@ -20,7 +20,7 @@ export default function App() {
             tabBarLabelStyle: { fontSize: 16, fontFamily, fontWeight: '700', textTransform: 'none' },
             tabBarActiveTintColor: accentColor,
             tabBarInactiveTintColor: textSecondaryColor,
-            tabBarIndicatorStyle: { backgroundColor: accentColor, minHeight: '0.3rem' },
+            tabBarIndicatorStyle: { backgroundColor: accentColor, minHeight: 5 },
           }}
         >
           <Tab.Screen name="Chat" component={Conversation} />

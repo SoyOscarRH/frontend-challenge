@@ -7,7 +7,8 @@ const useYanaAutoAddingMessages = ({timeToPending, timeToSend} : {timeToPending:
   const {IamAddingMessage, messages} = useAppSelector(state => state.messages);
 
   useEffect(() => {
-    const lastMessageSender = messages.at(-1)?.[1]?.at(-1)?.sender;
+    const lastMessages =  messages[messages.length - 1]?.[1];
+    const lastMessageSender = lastMessages?.[lastMessages?.length - 1]?.sender;
     if (lastMessageSender !== 'me' || IamAddingMessage) return;
     
     let pendingDone = false, messageDone = false;
