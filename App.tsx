@@ -10,7 +10,10 @@ import Challenge from './src';
 export default function App() {
   const [attempedToLoadFont, setAttempedToLoadFont] = useState(false);
   useEffect(() => {
-    const font = {'SF Pro Display': require('./assets/fonts/sf_pro_display.ttf')} as const;
+    const font = {
+      'SF Pro Display': require('./assets/fonts/sf_pro_display.ttf'),
+      'Raleway': require('./assets/fonts/raleway.ttf'),
+    } as const;
     loadAsync(font)
       .finally(() => setAttempedToLoadFont(true));
   });

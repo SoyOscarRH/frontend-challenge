@@ -13,5 +13,6 @@ export const backgroundColorGrey = '#F0F6FA';
 export const backgroundColorGreen = '#3B9391';
 
 export const fontFamily = 'SF Pro Display';
+export const fontFamilyAlternative = 'Raleway';
 
 export const textPrimaryColor = '#4B5959';

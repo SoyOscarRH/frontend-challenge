@@ -2,7 +2,7 @@ import React, {useEffect, useRef} from 'react';
 import { ScrollView, View } from 'react-native';
 import styled from 'styled-components/native';
 
-import {  white, fontFamily, textPrimaryColor, backgroundColorGrey, backgroundColorGreen} from '../../../designSystem';
+import {  white, fontFamily, textPrimaryColor, backgroundColorGrey, backgroundColorGreen, fontFamilyAlternative} from '../../../designSystem';
 import { useAppSelector } from '../../../redux/hooks';
 
 const formatDateForUs = (date: Date = new Date()) => {
@@ -58,9 +58,11 @@ const Bubble = styled.Text<{byMe?: boolean}>`
 `;
 
 const DateText = styled.Text`
-  margin: 24px 0;
+  margin-top: 24px;
+  margin-bottom: 16px;
   font-family: ${fontFamily};
   font-size: 12px;
   color: ${textPrimaryColor};
   align-self: center;
+  font-family: ${fontFamilyAlternative};
 `;
