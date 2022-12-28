@@ -27,12 +27,16 @@ const Texts = () => {
         <View key={key}>
           <DateText>{formatDateForUs(new Date(Number(messagesOfTheDay[0].timestamp)))}</DateText>
           {messagesOfTheDay.map(({text, sender, timestamp}) => (
-            <Bubble key={timestamp} byMe={sender === 'me'}>{text}</Bubble>
+            <Bubble key={timestamp} byMe={sender === 'me'}>
+              <BubbleText byMe={sender === 'me'}>
+                {text}
+              </BubbleText>
+            </Bubble>
           ))}
         </View>
       ))}
-      {IamAddingMessage && <Bubble byMe>...</Bubble>}
-      {YanaAddingMessage && <Bubble>...</Bubble>}
+      {IamAddingMessage && <Bubble byMe><BubbleText byMe>...</BubbleText></Bubble>}
+      {YanaAddingMessage && <Bubble><BubbleText>...</BubbleText></Bubble>}
     </ConversationViewer>
   );
 };
@@ -46,15 +50,18 @@ const ConversationViewer = styled.ScrollView`
   margin-bottom: 16px;
 `;
 
-const Bubble = styled.Text<{byMe?: boolean}>`
+const Bubble = styled.View<{byMe?: boolean}>`
   padding: 8px 16px;
-  border-radius: 20px;
+  border-radius: 16px;
   margin-bottom: 8px;
+  background-color: ${({byMe}) => byMe ? backgroundColorGreen : backgroundColorGrey};
+  align-self: ${({byMe}) => byMe ? 'flex-end' : 'flex-start'};
+`;
+
+const BubbleText = styled.Text<{byMe?: boolean}>`
   font-family: ${fontFamily};
   font-size: 14px;
   color: ${({byMe}) => byMe ? white : textPrimaryColor};
-  background-color: ${({byMe}) => byMe ? backgroundColorGreen : backgroundColorGrey};
-  align-self: ${({byMe}) => byMe ? 'flex-end' : 'flex-start'};
 `;
 
 const DateText = styled.Text`
