@@ -5,14 +5,15 @@ import { persistStore, persistReducer } from 'redux-persist';
 import storage from 'redux-persist/lib/storage'; // defaults to localStorage for web
 
 import userData from './slices/userData';
+import messages from './slices/messages';
 
 const persistConfig = {
   key: 'root',
   storage,
-  whitelist: ['userData']
+  whitelist: ['userData', 'messages']
 };
 
-const rootReducer = combineReducers({userData});
+const rootReducer = combineReducers({userData, messages});
 const persistedReducer = persistReducer(persistConfig, rootReducer);
 const preloadedState = {};
 
