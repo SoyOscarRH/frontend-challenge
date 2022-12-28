@@ -2,7 +2,7 @@ import React, {useEffect, useState} from 'react';
 import styled from 'styled-components/native';
 
 import Send from '../../../../assets/icons/Send';
-import { textSecondaryColor, grey, textPrimaryColor, accentColor, fontFamily } from '../../../designSystem';
+import { textSecondaryColor, grey, textPrimaryColor, accentColor, fontFamily, white } from '../../../designSystem';
 import { useAppDispatch, useAppSelector } from '../../../redux/hooks';
 import { addMessage, addingPendingMessageFromMe, discardPendingMessageFromMe} from '../../../redux/slices/messages';
 
@@ -21,9 +21,23 @@ const SendNewMessage = () => {
     if (!IamAddingMessage && message !== '') dispatch(addingPendingMessageFromMe());
   }, [message, IamAddingMessage]);
 
+  const shadowStyle = {
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 1},
+    shadowOpacity: 0.22,
+    shadowRadius: 2.22,
+    elevation: 3,
+  };
+
   return (
     <Composer>
-      <ComposerInput value={message} placeholder='Ingresa aquí tu mensaje' onChangeText={setMessage} />
+      <ComposerInput 
+        style={shadowStyle} 
+        onChangeText={setMessage}
+        onSubmitEditing={handleNewMessage}
+        value={message} 
+        placeholder='Ingresa aquí tu mensaje'
+      />
       <IconButton active={message !== ''} onPress={handleNewMessage}>
         <Send />
       </IconButton>
@@ -36,6 +50,7 @@ export default SendNewMessage;
 const Composer = styled.View`
   display: flex;
   flex-direction: row;
+  align-items: flex-end;
   margin: 0 16px;
 `;
 
@@ -46,10 +61,11 @@ const ComposerInput = styled.TextInput.attrs({
   padding: 20px 24px;
   outline-color: ${accentColor};
   font-family: ${fontFamily};
-  box-shadow: 0px 2px 6px rgba(0, 0, 0, 0.2);
   flex-grow: 1;
   margin-right: 16px;
   color: ${textPrimaryColor};
+  height: 56px;
+  background-color: ${white};
 `;
 
 const IconButton = styled.TouchableOpacity<{active: boolean}>`
