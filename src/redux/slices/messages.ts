@@ -1,7 +1,11 @@
 import { PayloadAction, createSlice } from '@reduxjs/toolkit';
 
 export type Message = {timestamp: string, text: string, sender: 'me' | 'yana'};
-export type Messages = { messages: Array<[string, Array<Message>]>, IamAddingMessage: boolean };
+export type Messages = { 
+  messages: Array<[string, Array<Message>]>, 
+  IamAddingMessage: boolean,
+  YanaAddingMessage: boolean,
+};
 
 const initialState = {
   messages: [
@@ -21,7 +25,6 @@ const messagesSlice = createSlice({
   initialState,
   reducers: {
     addMessage(state, action: PayloadAction<Message>) {
-      console.log(action.payload);
       const date = new Date(Number(action.payload.timestamp));
       const day = date.toISOString().slice(0, 10);
 
@@ -32,7 +35,8 @@ const messagesSlice = createSlice({
       else {
         state.messages[dayMessages][1].push(action.payload);
       }
-      state.IamAddingMessage = false;
+      if (action.payload.sender === 'me') state.IamAddingMessage = false;
+      else state.YanaAddingMessage = false;
     },
     addingPendingMessageFromMe(state) {
       state.IamAddingMessage = true;
@@ -43,9 +47,16 @@ const messagesSlice = createSlice({
     clearMessages(state) {
       state.messages = [];
       state.IamAddingMessage = false;
+      state.YanaAddingMessage = false;
+    },
+    addingPendingMessageFromYana(state) {
+      state.YanaAddingMessage = true;
+    },
+    discardPendingMessageFromYana(state) {
+      state.YanaAddingMessage = false;
     }
   }
 });
 
-export const { addMessage, addingPendingMessageFromMe, discardPendingMessageFromMe, clearMessages } = messagesSlice.actions;
+export const { addMessage, addingPendingMessageFromMe, discardPendingMessageFromMe, clearMessages, addingPendingMessageFromYana, discardPendingMessageFromYana } = messagesSlice.actions;
 export default messagesSlice.reducer;

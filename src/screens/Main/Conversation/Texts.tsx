@@ -1,5 +1,5 @@
-import React from 'react';
-import { View } from 'react-native';
+import React, {useEffect, useRef} from 'react';
+import { ScrollView, View } from 'react-native';
 import styled from 'styled-components/native';
 
 import {  white, fontFamily, textPrimaryColor, backgroundColorGrey, backgroundColorGreen} from '../../../designSystem';
@@ -14,10 +14,15 @@ const formatDateForUs = (date: Date = new Date()) => {
 }; 
 
 const Texts = () => {
-  const {messages, IamAddingMessage} = useAppSelector(state => state.messages);
+  const {messages, IamAddingMessage, YanaAddingMessage} = useAppSelector(state => state.messages);
+  const scrollViewRef = useRef<ScrollView>(null);
+
+  useEffect(() => {
+    scrollViewRef.current?.scrollToEnd({animated: true});
+  }, [messages, IamAddingMessage, YanaAddingMessage]);
 
   return (
-    <ConversationViewer>
+    <ConversationViewer ref={scrollViewRef}>
       {messages.map(([key, messagesOfTheDay]) => (
         <View key={key}>
           <DateText>{formatDateForUs(new Date(Number(messagesOfTheDay.at(0).timestamp)))}</DateText>
@@ -27,6 +32,7 @@ const Texts = () => {
         </View>
       ))}
       {IamAddingMessage && <Bubble byMe>...</Bubble>}
+      {YanaAddingMessage && <Bubble>...</Bubble>}
     </ConversationViewer>
   );
 };
@@ -52,7 +58,7 @@ const Bubble = styled.Text<{byMe?: boolean}>`
 `;
 
 const DateText = styled.Text`
-  margin: 16px 0;
+  margin: 24px 0;
   font-family: ${fontFamily};
   font-size: 12px;
   color: ${textPrimaryColor};

@@ -4,12 +4,12 @@ import styled from 'styled-components/native';
 import Send from '../../../../assets/icons/Send';
 import { textSecondaryColor, grey, textPrimaryColor, accentColor, fontFamily } from '../../../designSystem';
 import { useAppDispatch, useAppSelector } from '../../../redux/hooks';
-import { addMessage, addingPendingMessageFromMe, discardPendingMessageFromMe } from '../../../redux/slices/messages';
+import { addMessage, addingPendingMessageFromMe, discardPendingMessageFromMe, addingPendingMessageFromYana, discardPendingMessageFromYana } from '../../../redux/slices/messages';
 
 
 const SendNewMessage = () => {
   const [message, setMessage] = useState('');
-  const {IamAddingMessage} = useAppSelector(state => state.messages);
+  const {messages, IamAddingMessage} = useAppSelector(state => state.messages);
 
   const dispatch = useAppDispatch();
   const handleNewMessage = () => {
@@ -17,6 +17,27 @@ const SendNewMessage = () => {
     dispatch(addMessage({text: message, sender: 'me', timestamp}));
     setMessage('');
   };
+
+  useEffect(() => {
+    const lastMessageSender = messages.at(-1)?.[1]?.at(-1)?.sender;
+    if (lastMessageSender !== 'me' || message !== '') return;
+    
+    const newMessageFromYana = () => {
+      const timestamp = Date.now().toString();
+      const text = 'Hola humano, ¿Cómo estás?';
+      dispatch(addMessage({ text, sender: 'yana', timestamp}));
+    };
+    const newPendingMessage = () => {
+      dispatch(addingPendingMessageFromYana());
+    };
+
+    const pendingId = setTimeout(newPendingMessage, 2000);
+    const messageId = setTimeout(newMessageFromYana, 6000);
+    return () => {
+      clearTimeout(messageId);
+      clearTimeout(pendingId);
+    };
+  }, [messages, message]);
 
   useEffect(() => {
     if (IamAddingMessage && message === '') {
