@@ -46,6 +46,7 @@ const Title = styled.Text`
   margin-bottom: 48px;
   font-size: 24px;
   font-weight: 700;
+  font-family: 'SF Pro Display';
   align-self: center;
 `;
 
@@ -63,6 +64,7 @@ const Input = styled.TextInput.attrs({
   padding: 20px 24px;
   outline-color: #FF8755;
   margin-bottom: 12px;
+  font-family: 'SF Pro Display';
 `;
 
 const Button = styled.TouchableOpacity`
@@ -77,4 +79,5 @@ const ButtonText = styled.Text`
   font-size: 16px;
   color: #672A11;
   font-weight: 700;
+  font-family: 'SF Pro Display';
 `;

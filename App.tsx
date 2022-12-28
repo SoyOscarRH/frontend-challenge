@@ -35,5 +35,6 @@ const AppContainer = styled.View`
   background-color: #fff;
   align-items: center;
   justify-content: center;
+  letter-spacing: 0.05rem;
 `;
 
