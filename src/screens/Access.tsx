@@ -1,16 +1,24 @@
-import React from 'react';
+import React, { useState } from 'react';
 import styled from 'styled-components/native';
+import {useAppDispatch} from '../redux/hooks';
+import {setUserData} from '../redux/slices/userData';
+
 
 const Access = () => {
+  const dispatch = useAppDispatch();
+  const [username, setUsername] = useState('');
+  const [email, setEmail] = useState('');
+  const handleRegister = () => dispatch(setUserData({username, email}));
+
   return (
     <AccessLayout>
       <Title>Regístrate</Title>
       <Inputs>
-        <Input placeholder="Nombre de usuario" />
-        <Input placeholder="Correo electrónico" keyboardType="email-address" />
+        <Input value={username} placeholder="Nombre de usuario" onChangeText={setUsername} />
+        <Input value={email} placeholder="Correo electrónico" onChangeText={setEmail} keyboardType="email-address" />
         <Input placeholder="Contraseña" secureTextEntry />
       </Inputs>
-      <Button onPress={() => console.log('sending')}>
+      <Button onPress={handleRegister}>
         <ButtonText>
           Crear cuenta
         </ButtonText>

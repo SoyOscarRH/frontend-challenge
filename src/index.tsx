@@ -3,11 +3,12 @@ import {Image, Text} from 'react-native';
 import styled from 'styled-components/native';
 import {useGetAvatar} from './hooks/useGetAvatar';
 import Access from './screens/Access';
+import {useAppSelector} from './redux/hooks';
 
 const Challenge = () => {
+  const username = useAppSelector((state) => state.userData.data?.username);
   const yanaAvatar = useGetAvatar('yana');
-  const currentUser = null;
-  if (currentUser == null) {
+  if (username == null) {
     return <Access/>;
   }
   return (
@@ -15,7 +16,7 @@ const Challenge = () => {
       <FlexRowVCenter>
         <YanaAvatar source={yanaAvatar}/>
         <TextInstructionsContainer>
-          <BigText>Instrucciones:</BigText>
+          <BigText>Instrucciones {username}:</BigText>
           <Text>Comienza editando el archivo <CodeText>src/index.tsx</CodeText></Text>
         </TextInstructionsContainer>
       </FlexRowVCenter>

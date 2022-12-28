@@ -4,13 +4,15 @@ import {setupListeners} from '@reduxjs/toolkit/query';
 import { persistStore, persistReducer } from 'redux-persist';
 import storage from 'redux-persist/lib/storage'; // defaults to localStorage for web
 
+import userData from './slices/userData';
+
 const persistConfig = {
   key: 'root',
   storage,
+  whitelist: ['userData']
 };
 
-const rootReducer = combineReducers([]);
-
+const rootReducer = combineReducers({userData});
 const persistedReducer = persistReducer(persistConfig, rootReducer);
 const preloadedState = {};
 
