@@ -13,8 +13,7 @@ const SendNewMessage = () => {
 
   const dispatch = useAppDispatch();
   const handleNewMessage = () => {
-    const timestamp = new Date().getTime().toString();
-    dispatch(addMessage({text: message, sender: 'me', timestamp}));
+    dispatch(addMessage({text: message, sender: 'me'}));
     setMessage('');
   };
 
@@ -22,13 +21,17 @@ const SendNewMessage = () => {
     const lastMessageSender = messages.at(-1)?.[1]?.at(-1)?.sender;
     if (lastMessageSender !== 'me' || message !== '') return;
     
-    const newMessageFromYana = () => {
-      const timestamp = Date.now().toString();
-      const text = 'Hola humano, ¿Cómo estás?';
-      dispatch(addMessage({ text, sender: 'yana', timestamp}));
-    };
+    let pendingDone = false, messageDone = false;
+
     const newPendingMessage = () => {
+      pendingDone = true;
       dispatch(addingPendingMessageFromYana());
+    };
+
+    const newMessageFromYana = () => {
+      messageDone = true;const texts = ['Hola humano, ¿Cómo estás?', 'Continua', 'Deberian contratar a Oscar 🫶'];
+      const text = texts[Math.floor(Math.random() * texts.length)];
+      dispatch(addMessage({text, sender: 'yana'}));
     };
 
     const pendingId = setTimeout(newPendingMessage, 2000);
@@ -36,6 +39,7 @@ const SendNewMessage = () => {
     return () => {
       clearTimeout(messageId);
       clearTimeout(pendingId);
+      if (pendingDone && !messageDone) dispatch(discardPendingMessageFromYana());
     };
   }, [messages, message]);
 

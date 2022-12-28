@@ -24,16 +24,17 @@ const messagesSlice = createSlice({
   name: 'messagesData',
   initialState,
   reducers: {
-    addMessage(state, action: PayloadAction<Message>) {
-      const date = new Date(Number(action.payload.timestamp));
+    addMessage(state, action: PayloadAction<Omit<Message, 'timestamp'>>) {
+      const date = new Date();
+      const message = {...action.payload, timestamp: date.getTime().toString()};
       const day = date.toISOString().slice(0, 10);
 
       const dayMessages = state.messages.indexOf(state.messages.find(([key]) => key === day));
       if (dayMessages === -1) {
-        state.messages.push([day, [action.payload]]);
+        state.messages.push([day, [message]]);
       }
       else {
-        state.messages[dayMessages][1].push(action.payload);
+        state.messages[dayMessages][1].push(message);
       }
       if (action.payload.sender === 'me') state.IamAddingMessage = false;
       else state.YanaAddingMessage = false;
