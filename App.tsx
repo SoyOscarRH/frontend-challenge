@@ -32,7 +32,7 @@ export default function App() {
 
 const AppContainer = styled.View`
   flex: 1;
-  background-color: #ecf0f1;
+  background-color: #fff;
   align-items: center;
   justify-content: center;
 `;

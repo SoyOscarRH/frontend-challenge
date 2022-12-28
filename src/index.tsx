@@ -2,11 +2,14 @@ import React from 'react';
 import {Image, Text} from 'react-native';
 import styled from 'styled-components/native';
 import {useGetAvatar} from './hooks/useGetAvatar';
+import Access from './screens/Access';
 
-
-// Más instrucciones en https://yanatechnologies.notion.site/Frontend-Challenge-9427a4f79be54b5bb8c3ace2dd93a414
 const Challenge = () => {
   const yanaAvatar = useGetAvatar('yana');
+  const currentUser = null;
+  if (currentUser == null) {
+    return <Access/>;
+  }
   return (
     <RoundedContainer bgColor={'white'} padding={12} >
       <FlexRowVCenter>
