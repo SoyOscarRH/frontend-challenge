@@ -20,7 +20,7 @@ const Access = () => {
         <Input value={email} placeholder="Correo electrónico" onChangeText={setEmail} keyboardType="email-address" />
         <Input placeholder="Contraseña" secureTextEntry />
       </Inputs>
-      <Button onPress={handleRegister} title="Crear cuenta" />
+      <Button mode="primary" onPress={handleRegister} title="Crear cuenta" />
     </AccessLayout>
   );
 };

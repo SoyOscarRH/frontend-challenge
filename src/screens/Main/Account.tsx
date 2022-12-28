@@ -1,12 +1,56 @@
 import React from 'react';
-import {View, Text} from 'react-native';
+import styled from 'styled-components/native';
+import { backgroundColorGrey } from '../../designSystem';
+import { useGetAvatar } from '../../hooks/useGetAvatar';
+
+import Button from '../../components/Button';
+import TwoLinesInfo from '../../components/TwoLines';
+import { useAppSelector, useAppDispatch } from '../../redux/hooks';
+import { logout } from '../../redux/slices/userData';
 
 const Account = () => {
+  const dispatch = useAppDispatch();
+  const onPress = () => dispatch(logout());
+  const userAvatar = useGetAvatar('user');
+  const data = useAppSelector(state => state.userData.data);
+
   return (
-    <View style={{ minHeight: 100, flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-      <Text>Account!</Text>
-    </View>
+    <AccountLayout>
+      <Grower>
+        <ProfilePhoto source={userAvatar} />
+        <TwoLinesInfo title="Nombre de usuario" subtitle={data.username} />
+        <TwoLinesInfo title="Correo electrónico" subtitle={data.email} />
+      </Grower>
+      <Button mode="alternative" onPress={onPress} title="Cerrar Sesión" />
+    </AccountLayout>
   );
 };
 
 export default Account;
+
+const AccountLayout = styled.View`
+  background-color: white;
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  height: 100%;
+  width: 100%;
+  padding-top: 0px;
+  padding-bottom: 32px;
+  padding-left: 24px;
+  padding-right: 24px;
+`;
+
+const Grower = styled.View`
+  flex-grow: 1;
+  align-items: center;
+`;
+
+const ProfilePhoto = styled.Image`
+  width: 96px;
+  height: 96px;
+  margin: 48px 0px;
+  background-color: ${backgroundColorGrey};
+  background-opacity: 0.5;
+  border-radius: 100%;
+`;

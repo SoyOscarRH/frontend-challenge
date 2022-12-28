@@ -12,8 +12,11 @@ const userDataSlice = createSlice({
       const {username, email} = action.payload;
       userData.data = {username, email};
     },
+    logout(userData) {
+      userData.data = null;
+    },
   }
 });
 
-export const { setUserData } = userDataSlice.actions;
+export const { setUserData, logout } = userDataSlice.actions;
 export default userDataSlice.reducer;
