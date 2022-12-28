@@ -6,6 +6,9 @@ import { createMaterialTopTabNavigator } from '@react-navigation/material-top-ta
 import Conversation from './Conversation';
 import Account from './Account';
 
+import {fontFamily, accentColor, textSecondaryColor} from '../../designSystem';
+
+
 const Tab = createMaterialTopTabNavigator();
 
 export default function App() {
@@ -14,10 +17,10 @@ export default function App() {
       <TabsLayout>
         <Tab.Navigator
           screenOptions={{
-            tabBarLabelStyle: { fontSize: 16, fontFamily: 'SF Pro Display', fontWeight: '700', textTransform: 'none' },
-            tabBarActiveTintColor: '#FF8755',
-            tabBarInactiveTintColor: '#00000080',
-            tabBarIndicatorStyle: { backgroundColor: '#FF8755', minHeight: '0.3rem' },
+            tabBarLabelStyle: { fontSize: 16, fontFamily, fontWeight: '700', textTransform: 'none' },
+            tabBarActiveTintColor: accentColor,
+            tabBarInactiveTintColor: textSecondaryColor,
+            tabBarIndicatorStyle: { backgroundColor: accentColor, minHeight: '0.3rem' },
           }}
         >
           <Tab.Screen name="Chat" component={Conversation} />

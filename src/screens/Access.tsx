@@ -3,6 +3,7 @@ import styled from 'styled-components/native';
 import {useAppDispatch} from '../redux/hooks';
 import {setUserData} from '../redux/slices/userData';
 
+import {negativeAccentColor, fontFamily, accentColor, textSecondaryColor, backgroundColorGrey} from '../designSystem';
 
 const Access = () => {
   const dispatch = useAppDispatch();
@@ -46,7 +47,7 @@ const Title = styled.Text`
   margin-bottom: 48px;
   font-size: 24px;
   font-weight: 700;
-  font-family: 'SF Pro Display';
+  font-family: ${fontFamily};
   align-self: center;
 `;
 
@@ -57,18 +58,18 @@ const Inputs = styled.View`
 `;
 
 const Input = styled.TextInput.attrs({
-  placeholderTextColor: '#00000080'
+  placeholderTextColor: textSecondaryColor
 })`
-  background: #F0F6FA;
+  background: ${backgroundColorGrey};
   border-radius: 32px;
   padding: 20px 24px;
-  outline-color: #FF8755;
+  outline-color: ${accentColor};
   margin-bottom: 12px;
-  font-family: 'SF Pro Display';
+  font-family: ${fontFamily};
 `;
 
 const Button = styled.TouchableOpacity`
-  background: #FF8755;
+  background: ${accentColor};
   border-radius: 32px;
   padding: 20px 0;
   display: flex;
@@ -77,7 +78,7 @@ const Button = styled.TouchableOpacity`
 
 const ButtonText = styled.Text`
   font-size: 16px;
-  color: #672A11;
+  color: ${negativeAccentColor};
   font-weight: 700;
-  font-family: 'SF Pro Display';
+  font-family: ${fontFamily};
 `;
