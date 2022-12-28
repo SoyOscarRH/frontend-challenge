@@ -7,10 +7,14 @@ import Button from '../../components/Button';
 import TwoLinesInfo from '../../components/TwoLines';
 import { useAppSelector, useAppDispatch } from '../../redux/hooks';
 import { logout } from '../../redux/slices/userData';
+import { clearMessages } from '../../redux/slices/messages';
 
 const Account = () => {
   const dispatch = useAppDispatch();
-  const onPress = () => dispatch(logout());
+  const onPress = () => {
+    dispatch(clearMessages());
+    dispatch(logout());
+  };
   const userAvatar = useGetAvatar('user');
   const data = useAppSelector(state => state.userData.data);
 

@@ -16,9 +16,13 @@ const messagesSlice = createSlice({
     },
     discardPendingMessageFromMe(state) {
       state.IamAddingMessage = false;
+    },
+    clearMessages(state) {
+      state.messages = [];
+      state.IamAddingMessage = false;
     }
   }
 });
 
-export const { addMessage, addingPendingMessageFromMe, discardPendingMessageFromMe } = messagesSlice.actions;
+export const { addMessage, addingPendingMessageFromMe, discardPendingMessageFromMe, clearMessages } = messagesSlice.actions;
 export default messagesSlice.reducer;
