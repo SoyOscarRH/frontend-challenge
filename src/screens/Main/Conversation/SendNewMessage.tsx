@@ -1,14 +1,16 @@
 import React, {useEffect, useState} from 'react';
 import styled from 'styled-components/native';
 
-import Send from '../../../../assets/icons/send';
+import Send from '../../../../assets/icons/Send';
 import { textSecondaryColor, grey, textPrimaryColor, accentColor, fontFamily } from '../../../designSystem';
-import { useAppDispatch } from '../../../redux/hooks';
+import { useAppDispatch, useAppSelector } from '../../../redux/hooks';
 import { addMessage, addingPendingMessageFromMe, discardPendingMessageFromMe } from '../../../redux/slices/messages';
 
 
 const SendNewMessage = () => {
   const [message, setMessage] = useState('');
+  const {IamAddingMessage} = useAppSelector(state => state.messages);
+
   const dispatch = useAppDispatch();
   const handleNewMessage = () => {
     const timestamp = new Date().getTime().toString();
@@ -17,8 +19,14 @@ const SendNewMessage = () => {
   };
 
   useEffect(() => {
-    dispatch(message !== '' ? addingPendingMessageFromMe() : discardPendingMessageFromMe());
-  }, [message]);
+    if (IamAddingMessage && message === '') {
+      dispatch(discardPendingMessageFromMe());
+    }
+
+    if (!IamAddingMessage && message !== '') {
+      dispatch(addingPendingMessageFromMe());
+    }
+  }, [message, IamAddingMessage]);
 
   return (
     <Composer>
