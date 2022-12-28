@@ -1,4 +1,5 @@
 import React from 'react';
+import { View } from 'react-native';
 import styled from 'styled-components/native';
 
 import {  white, fontFamily, textPrimaryColor, backgroundColorGrey, backgroundColorGreen} from '../../../designSystem';
@@ -17,13 +18,13 @@ const Texts = () => {
 
   return (
     <ConversationViewer>
-      <Spacer />
-      <DateText>{formatDateForUs()}</DateText>
-      <Bubble>Hola humano, ¿Cómo estás?</Bubble>
-      <Bubble byMe>message 1</Bubble>
-      <Bubble >message 3</Bubble>
-      {messages.map(({timestamp, text, sender}) => (
-        <Bubble key={timestamp} byMe={sender === 'me'}>{text}</Bubble>
+      {messages.map(([key, messagesOfTheDay]) => (
+        <View key={key}>
+          <DateText>{formatDateForUs(new Date(Number(messagesOfTheDay.at(0).timestamp)))}</DateText>
+          {messagesOfTheDay.map(({text, sender, timestamp}) => (
+            <Bubble key={timestamp} byMe={sender === 'me'}>{text}</Bubble>
+          ))}
+        </View>
       ))}
       {IamAddingMessage && <Bubble byMe>...</Bubble>}
     </ConversationViewer>
@@ -39,10 +40,6 @@ const ConversationViewer = styled.ScrollView`
   margin-bottom: 16px;
 `;
 
-const Spacer = styled.View`
-  height: 16px;
-`;
-
 const Bubble = styled.Text<{byMe?: boolean}>`
   padding: 8px 16px;
   border-radius: 20px;
@@ -55,7 +52,7 @@ const Bubble = styled.Text<{byMe?: boolean}>`
 `;
 
 const DateText = styled.Text`
-  margin-bottom: 16px;
+  margin: 16px 0;
   font-family: ${fontFamily};
   font-size: 12px;
   color: ${textPrimaryColor};
