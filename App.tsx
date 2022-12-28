@@ -14,13 +14,19 @@ SplashScreen.preventAutoHideAsync();
 export default function App() {
   const [attempedToLoadFont, setAttempedToLoadFont] = useState(false);
   const onLayoutRootView = useCallback(async () => {
-    const font = {
-      'SF Pro Display': require('./assets/fonts/sf_pro_display.ttf'),
-      'Raleway': require('./assets/fonts/raleway.ttf'),
-    } as const;
-    loadAsync(font)
-      .finally(SplashScreen.hideAsync)
-      .finally(() => setAttempedToLoadFont(true));
+    try {
+      const font = {
+        'SF Pro Display': require('./assets/fonts/sf_pro_display.ttf'),
+        'Raleway': require('./assets/fonts/raleway.ttf'),
+      } as const;
+  
+      await loadAsync(font);
+      await SplashScreen.hideAsync();
+      setAttempedToLoadFont(true);
+    }
+    catch (e) {
+      console.warn(e);
+    }
   }, []);
   
   return (
@@ -28,7 +34,7 @@ export default function App() {
       <PersistGate persistor={persistor} loading={null}>
         <SafeAreaProvider>
           <AppContainer onLayout={onLayoutRootView}>
-            {attempedToLoadFont && <Challenge/>}
+            {attempedToLoadFont ? <Challenge/> : null}
           </AppContainer>
         </SafeAreaProvider>
       </PersistGate>
