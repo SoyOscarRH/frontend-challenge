@@ -5,6 +5,7 @@ import {setUserData} from '../redux/slices/userData';
 
 import {fontFamily, accentColor, textSecondaryColor, backgroundColorGrey} from '../designSystem';
 import Button from '../components/Button';
+import { KeyboardAvoidingView } from 'react-native';
 
 const Access = () => {
   const dispatch = useAppDispatch();
@@ -20,7 +21,9 @@ const Access = () => {
         <Input value={email} placeholder="Correo electrónico" onChangeText={setEmail} keyboardType="email-address" />
         <Input placeholder="Contraseña" secureTextEntry />
       </Inputs>
-      <Button mode="primary" onPress={handleRegister} title="Crear cuenta" />
+      <KeyboardAvoidingView behavior="padding" keyboardVerticalOffset={80}>
+        <Button mode="primary" onPress={handleRegister} title="Crear cuenta" />
+      </KeyboardAvoidingView>
     </AccessLayout>
   );
 };
@@ -32,7 +35,6 @@ const AccessLayout = styled.View`
   flex-direction: column;
   align-items: stretch;
   height: 100%;
-  width: 100%;
   padding-top: 0px;
   padding-bottom: 32px;
   padding-left: 24px;
