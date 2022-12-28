@@ -3,7 +3,8 @@ import styled from 'styled-components/native';
 import {useAppDispatch} from '../redux/hooks';
 import {setUserData} from '../redux/slices/userData';
 
-import {negativeAccentColor, fontFamily, accentColor, textSecondaryColor, backgroundColorGrey} from '../designSystem';
+import {fontFamily, accentColor, textSecondaryColor, backgroundColorGrey} from '../designSystem';
+import Button from '../components/Button';
 
 const Access = () => {
   const dispatch = useAppDispatch();
@@ -19,11 +20,7 @@ const Access = () => {
         <Input value={email} placeholder="Correo electrónico" onChangeText={setEmail} keyboardType="email-address" />
         <Input placeholder="Contraseña" secureTextEntry />
       </Inputs>
-      <Button onPress={handleRegister}>
-        <ButtonText>
-          Crear cuenta
-        </ButtonText>
-      </Button>
+      <Button onPress={handleRegister} title="Crear cuenta" />
     </AccessLayout>
   );
 };
@@ -65,20 +62,5 @@ const Input = styled.TextInput.attrs({
   padding: 20px 24px;
   outline-color: ${accentColor};
   margin-bottom: 12px;
-  font-family: ${fontFamily};
-`;
-
-const Button = styled.TouchableOpacity`
-  background: ${accentColor};
-  border-radius: 32px;
-  padding: 20px 0;
-  display: flex;
-  align-items: center;
-`;
-
-const ButtonText = styled.Text`
-  font-size: 16px;
-  color: ${negativeAccentColor};
-  font-weight: 700;
   font-family: ${fontFamily};
 `;
