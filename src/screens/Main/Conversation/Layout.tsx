@@ -1,10 +1,12 @@
 import React from 'react';
 import styled from 'styled-components/native';
+import useYanaAutoAddingMessages from '../../../hooks/useYanaAutoAddingMessages';
 import SendNewMessage from './SendNewMessage';
 import Texts from './Texts';
 
 
 const Conversation = () => {
+  useYanaAutoAddingMessages({timeToPending: 2000, timeToSend: 6000});
   return (
     <ConversationLayout>
       <Texts />

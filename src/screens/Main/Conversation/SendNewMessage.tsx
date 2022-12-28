@@ -4,12 +4,11 @@ import styled from 'styled-components/native';
 import Send from '../../../../assets/icons/Send';
 import { textSecondaryColor, grey, textPrimaryColor, accentColor, fontFamily } from '../../../designSystem';
 import { useAppDispatch, useAppSelector } from '../../../redux/hooks';
-import { addMessage, addingPendingMessageFromMe, discardPendingMessageFromMe, addingPendingMessageFromYana, discardPendingMessageFromYana } from '../../../redux/slices/messages';
-
+import { addMessage, addingPendingMessageFromMe, discardPendingMessageFromMe} from '../../../redux/slices/messages';
 
 const SendNewMessage = () => {
   const [message, setMessage] = useState('');
-  const {messages, IamAddingMessage} = useAppSelector(state => state.messages);
+  const {IamAddingMessage} = useAppSelector(state => state.messages);
 
   const dispatch = useAppDispatch();
   const handleNewMessage = () => {
@@ -18,39 +17,8 @@ const SendNewMessage = () => {
   };
 
   useEffect(() => {
-    const lastMessageSender = messages.at(-1)?.[1]?.at(-1)?.sender;
-    if (lastMessageSender !== 'me' || message !== '') return;
-    
-    let pendingDone = false, messageDone = false;
-
-    const newPendingMessage = () => {
-      pendingDone = true;
-      dispatch(addingPendingMessageFromYana());
-    };
-
-    const newMessageFromYana = () => {
-      messageDone = true;const texts = ['Hola humano, ¿Cómo estás?', 'Continua', 'Deberian contratar a Oscar 🫶'];
-      const text = texts[Math.floor(Math.random() * texts.length)];
-      dispatch(addMessage({text, sender: 'yana'}));
-    };
-
-    const pendingId = setTimeout(newPendingMessage, 2000);
-    const messageId = setTimeout(newMessageFromYana, 6000);
-    return () => {
-      clearTimeout(messageId);
-      clearTimeout(pendingId);
-      if (pendingDone && !messageDone) dispatch(discardPendingMessageFromYana());
-    };
-  }, [messages, message]);
-
-  useEffect(() => {
-    if (IamAddingMessage && message === '') {
-      dispatch(discardPendingMessageFromMe());
-    }
-
-    if (!IamAddingMessage && message !== '') {
-      dispatch(addingPendingMessageFromMe());
-    }
+    if (IamAddingMessage && message === '') dispatch(discardPendingMessageFromMe());
+    if (!IamAddingMessage && message !== '') dispatch(addingPendingMessageFromMe());
   }, [message, IamAddingMessage]);
 
   return (
