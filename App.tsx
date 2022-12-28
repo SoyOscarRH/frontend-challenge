@@ -1,11 +1,14 @@
-import React, {useState, useEffect} from 'react';
+import React, {useState, useEffect, useCallback} from 'react';
 import styled from 'styled-components/native';
 import {Provider} from 'react-redux';
 import {persistor, store} from './src/redux/store';
 import {PersistGate} from 'redux-persist/integration/react';
+import * as SplashScreen from 'expo-splash-screen';
 import {loadAsync} from 'expo-font';
 
 import Challenge from './src';
+
+SplashScreen.preventAutoHideAsync();
 
 export default function App() {
   const [attempedToLoadFont, setAttempedToLoadFont] = useState(false);
@@ -18,14 +21,16 @@ export default function App() {
       .finally(() => setAttempedToLoadFont(true));
   });
 
-  if (!attempedToLoadFont) {
-    return null;
-  }
+  const onLayoutRootView = useCallback(async () => {
+    if (attempedToLoadFont) {
+      await SplashScreen.hideAsync();
+    }
+  }, [attempedToLoadFont]);
   
   return (
     <Provider store={store}>
       <PersistGate persistor={persistor} loading={null}>
-        <AppContainer>
+        <AppContainer onLayout={onLayoutRootView}>
           <Challenge/>
         </AppContainer>
       </PersistGate>
