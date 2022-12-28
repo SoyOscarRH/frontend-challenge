@@ -46,7 +46,7 @@ const messagesSlice = createSlice({
       state.IamAddingMessage = false;
     },
     clearMessages(state) {
-      state.messages = [];
+      state.messages = initialState.messages;
       state.IamAddingMessage = false;
       state.YanaAddingMessage = false;
     },
